@@ -2,14 +2,15 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { MatriculasService } from './matriculas.service';
 import { CreateMatriculaDto } from './dto/create-matricula.dto';
 import { UpdateMatriculaDto } from './dto/update-matricula.dto';
+import { Matricula } from './entities/matricula.entity';
 
 @Controller('matriculas')
 export class MatriculasController {
-  constructor(private readonly matriculasService: MatriculasService) {}
+  constructor(private readonly matriculasService: MatriculasService) { }
 
   @Post()
-  create(@Body() createMatriculaDto: CreateMatriculaDto) {
-    return this.matriculasService.create(createMatriculaDto);
+  create(@Body() dados: { codigo_matricula: string; nome_completo: string; acompanhamento: string; situacao: string; }) {
+    return this.matriculasService.create(dados.codigo_matricula, dados.nome_completo, dados.acompanhamento, dados.situacao);
   }
 
   @Get()
